@@ -17,7 +17,7 @@
 #include "osgwidget.h"
 #include "osgrenderer.h"
 
-#include <QApplication>
+#include <QWindow>
 #include <QScreen>
 
 OSGWidget::OSGWidget(QWidget* parent)
@@ -31,13 +31,13 @@ void OSGWidget::initializeGL()
 {
     m_renderer = new OSGRenderer(this);
     m_renderer->setup(this);
-    m_renderer->setupOSG(width(), height(), qApp->screens().front()->devicePixelRatio());
+    m_renderer->setupOSG(width(), height(), windowHandle()->screen()->devicePixelRatio());
     emit initialized();
 }
 
 void OSGWidget::resizeGL(int w, int h)
 {
-    m_renderer->resize(w, h, qApp->screens().front()->devicePixelRatio());
+    m_renderer->resize(w, h, windowHandle()->screen()->devicePixelRatio());
 }
 
 void OSGWidget::paintGL()
